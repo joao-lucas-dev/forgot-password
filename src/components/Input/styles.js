@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   margin-top: 10px;
-  width: 320px;
+  width: 300px;
   height: 50px;
   border: 2px solid
-    ${(props) => (props.isFocus ? '#7159c1' : 'rgb(40, 39, 44)')};
+    ${(props) => (props.isFocus ? '#484a75' : 'rgb(40, 39, 44)')};
   display: flex;
   flex-direction: row;
   align-items: center;

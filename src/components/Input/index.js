@@ -5,15 +5,23 @@ import PropTypes from 'prop-types';
 
 import { Container } from './styles';
 
-export default function Input({ placeholder, onFocus, onBlur, isFocus }) {
+export default function Input({
+  type,
+  placeholder,
+  onChange,
+  onFocus,
+  onBlur,
+  isFocus,
+}) {
   return (
     <Container isFocus={isFocus}>
       <div>
-        <MdLock size={18} color={isFocus ? '#7159c1' : 'rgb(40, 39, 44)'} />
+        <MdLock size={18} color={isFocus ? '#484a75' : 'rgb(40, 39, 44)'} />
       </div>
       <input
-        type="text"
+        type={type}
         placeholder={placeholder}
+        onChange={onChange}
         onFocus={onFocus}
         onBlur={onBlur}
       />
@@ -22,8 +30,10 @@ export default function Input({ placeholder, onFocus, onBlur, isFocus }) {
 }
 
 Input.propTypes = {
+  type: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
-  onFocus: PropTypes.bool.isRequired,
-  onBlur: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onFocus: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
   isFocus: PropTypes.bool.isRequired,
 };
