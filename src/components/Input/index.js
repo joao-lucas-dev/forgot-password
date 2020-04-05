@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { Container } from './styles';
 
-export default function Input({ onFocus, onBlur, isFocus }) {
+export default function Input({ placeholder, onFocus, onBlur, isFocus }) {
   return (
     <Container isFocus={isFocus}>
       <div>
@@ -13,7 +13,7 @@ export default function Input({ onFocus, onBlur, isFocus }) {
       </div>
       <input
         type="text"
-        placeholder="Sua nova senha"
+        placeholder={placeholder}
         onFocus={onFocus}
         onBlur={onBlur}
       />
@@ -22,6 +22,7 @@ export default function Input({ onFocus, onBlur, isFocus }) {
 }
 
 Input.propTypes = {
+  placeholder: PropTypes.string.isRequired,
   onFocus: PropTypes.bool.isRequired,
   onBlur: PropTypes.bool.isRequired,
   isFocus: PropTypes.bool.isRequired,
