@@ -1,54 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
+import { Form } from '@unform/web';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
+import * as Yup from 'yup';
 
 import Input from '../../components/Input';
 import api from '../../services/api';
-import { Container, Form, Footer } from './styles';
+import { Container, Footer } from './styles';
 
 export default function ForgotPassword({ location }) {
   const [isFocus, setIsFocus] = useState(false);
   const [isFocusSecond, setFocusSecond] = useState(false);
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const formRef = useRef(null);
 
   const parsed = queryString.parse(location.search);
   const { token } = parsed;
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-
+  async function handleSubmit({ password, confirmPassword }) {
     try {
+      const schema = Yup.object().shape({
+        password: Yup.string()
+          .min(6, 'A senha deve conter pelo menos 6 caracteres!')
+          .required('A nova senha é obrigatória!'),
+        confirmPassword: Yup.string().required(
+          'A confirmação da nova senha é obrigatória!'
+        ),
+      });
+
+      await schema.validate(
+        { password, confirmPassword },
+        {
+          abortEarly: false,
+        }
+      );
       await api.put('/forgot-password', { token, password, confirmPassword });
-      setPassword('');
-      setConfirmPassword('');
       alert('Senha trocada com sucesso!');
     } catch (err) {
-      alert('Algo deu errado. Por favor, tente mais tarde!');
+      if (err instanceof Yup.ValidationError) {
+        const errorMessages = {};
+
+        err.inner.forEach((error) => {
+          errorMessages[error.path] = error.message;
+        });
+
+        formRef.current.setErrors(errorMessages);
+      } else {
+        alert('Algo deu errado. Por favor, tente mais tarde!');
+      }
     }
   }
 
   return (
     <>
       <Container>
-        <Form onSubmit={handleSubmit}>
+        <Form
+          ref={formRef}
+          initialData={{ password: '', confirmPassword: '' }}
+          onSubmit={handleSubmit}
+        >
           <h1>Resetar Senha</h1>
 
           <Input
+            name="password"
             type="password"
-            value={password}
             placeholder="Sua nova senha"
-            onChange={(e) => setPassword(e.target.value)}
             isFocus={isFocus}
             onFocus={() => setIsFocus(!isFocus)}
             onBlur={() => setIsFocus(!isFocus)}
           />
           <Input
+            name="confirmPassword"
             type="password"
-            value={confirmPassword}
             placeholder="Confirme nova senha"
-            onChange={(e) => setConfirmPassword(e.target.value)}
             isFocus={isFocusSecond}
             onFocus={() => setFocusSecond(!isFocusSecond)}
             onBlur={() => setFocusSecond(!isFocusSecond)}

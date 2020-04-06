@@ -7,35 +7,35 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
 
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-  h1 {
-    font-size: 25px;
-    margin-bottom: 10px;
-    display: block;
-    color: #fff;
-  }
+    h1 {
+      font-size: 25px;
+      margin-bottom: 10px;
+      display: block;
+      color: #fff;
+    }
 
-  button {
-    margin-top: 20px;
-    width: 300px;
-    height: 50px;
-    font-size: 16px;
-    border-radius: 5px;
-    background: #484a75;
-    border: 0;
-    color: #fff;
-    font-weight: bold;
-    transition: background 200ms;
+    button {
+      margin-top: 20px;
+      width: 300px;
+      height: 50px;
+      font-size: 16px;
+      border-radius: 5px;
+      background: #484a75;
+      border: 0;
+      color: #fff;
+      font-weight: bold;
+      transition: background 200ms;
 
-    &:hover {
-      background: ${lighten(0.08, '#484a75')};
+      &:hover {
+        background: ${lighten(0.08, '#484a75')};
+      }
     }
   }
 `;

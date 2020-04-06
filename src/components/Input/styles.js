@@ -27,3 +27,10 @@ export const Container = styled.div`
     color: #fff;
   }
 `;
+
+export const Error = styled.div`
+  display: ${(props) => (props.error ? 'block' : 'none')};
+  width: 100%;
+  margin-top: 10px;
+  color: #f00;
+`;

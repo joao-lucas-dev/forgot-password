@@ -1,39 +1,37 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MdLock } from 'react-icons/md';
 
+import { useField } from '@unform/core';
 import PropTypes from 'prop-types';
 
-import { Container } from './styles';
+import { Container, Error } from './styles';
 
-export default function Input({
-  type,
-  placeholder,
-  onChange,
-  onFocus,
-  onBlur,
-  isFocus,
-}) {
+export default function Input({ name, isFocus, ...rest }) {
+  const inputRef = useRef(null);
+  const { fieldName, defaultValue = '', registerField, error } = useField(name);
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: inputRef.current,
+      path: 'value',
+    });
+  }, [fieldName, registerField]);
+
   return (
-    <Container isFocus={isFocus}>
-      <div>
-        <MdLock size={18} color={isFocus ? '#484a75' : 'rgb(40, 39, 44)'} />
-      </div>
-      <input
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-      />
-    </Container>
+    <>
+      <Container isFocus={isFocus}>
+        <div>
+          <MdLock size={18} color={isFocus ? '#484a75' : 'rgb(40, 39, 44)'} />
+        </div>
+        <input ref={inputRef} defaultValue={defaultValue} {...rest} />
+      </Container>
+      <Error error={error}>{error && <strong>{error}</strong>}</Error>
+    </>
   );
 }
 
 Input.propTypes = {
-  type: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  onFocus: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
   isFocus: PropTypes.bool.isRequired,
 };
