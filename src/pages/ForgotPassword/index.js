@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import * as Yup from 'yup';
 
+import logo from '../../assets/imgs/logo.svg';
 import Input from '../../components/Input';
 import api from '../../services/api';
-import { Container, Footer } from './styles';
+import { Header, Container, Footer } from './styles';
 
 export default function ForgotPassword({ location }) {
   const [isFocus, setIsFocus] = useState(false);
@@ -54,6 +55,9 @@ export default function ForgotPassword({ location }) {
 
   return (
     <>
+      <Header>
+        <img src={logo} alt="Logo Petbuddy" />
+      </Header>
       <Container>
         <Form
           ref={formRef}
@@ -79,7 +83,7 @@ export default function ForgotPassword({ location }) {
             onBlur={() => setFocusSecond(!isFocusSecond)}
           />
 
-          <button type="submit">Alterar Senha</button>
+          <button type="submit">alterar senha</button>
         </Form>
       </Container>
 

@@ -4,17 +4,14 @@ export const Container = styled.div`
   margin-top: 10px;
   width: 300px;
   height: 50px;
-  border: 2px solid
-    ${(props) => (props.isFocus ? '#484a75' : 'rgb(40, 39, 44)')};
+  border-bottom: 2px solid ${(props) => (props.isFocus ? '#7239F2' : '#bababa')};
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 5px;
-  background: #19181f;
   transition: border 0.2s ease 0s;
 
   div {
-    padding: 0 15px;
+    padding: 0 10px;
   }
 
   input {
@@ -24,7 +21,6 @@ export const Container = styled.div`
     font-size: 16px;
     height: 100%;
     background: transparent;
-    color: #fff;
   }
 `;
 
@@ -33,4 +29,5 @@ export const Error = styled.div`
   width: 100%;
   margin-top: 10px;
   color: #f00;
+  font-size: 12px;
 `;

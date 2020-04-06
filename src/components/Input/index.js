@@ -22,7 +22,7 @@ export default function Input({ name, isFocus, ...rest }) {
     <>
       <Container isFocus={isFocus}>
         <div>
-          <MdLock size={18} color={isFocus ? '#484a75' : 'rgb(40, 39, 44)'} />
+          <MdLock size={18} color={isFocus ? '#7239F2' : '#484848'} />
         </div>
         <input ref={inputRef} defaultValue={defaultValue} {...rest} />
       </Container>
