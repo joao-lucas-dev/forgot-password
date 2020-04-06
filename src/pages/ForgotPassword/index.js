@@ -10,7 +10,7 @@ import Input from '../../components/Input';
 import api from '../../services/api';
 import { Header, Container, Footer } from './styles';
 
-export default function ForgotPassword({ location }) {
+export default function ForgotPassword({ location, history }) {
   const [isFocus, setIsFocus] = useState(false);
   const [isFocusSecond, setFocusSecond] = useState(false);
 
@@ -19,7 +19,7 @@ export default function ForgotPassword({ location }) {
   const parsed = queryString.parse(location.search);
   const { token } = parsed;
 
-  async function handleSubmit({ password, confirmPassword }) {
+  async function handleSubmit({ password, confirmPassword }, { reset }) {
     try {
       const schema = Yup.object().shape({
         password: Yup.string()
@@ -37,7 +37,9 @@ export default function ForgotPassword({ location }) {
         }
       );
       await api.put('/forgot-password', { token, password, confirmPassword });
-      alert('Senha trocada com sucesso!');
+      reset();
+
+      history.push('/success');
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errorMessages = {};
@@ -47,9 +49,8 @@ export default function ForgotPassword({ location }) {
         });
 
         formRef.current.setErrors(errorMessages);
-      } else {
-        alert('Algo deu errado. Por favor, tente mais tarde!');
       }
+      reset();
     }
   }
 
